@@ -37,6 +37,9 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include ControllerHelpers, type: :controller
   config.include FeatureHelpers, type: :feature
+
+  Capybara.javascript_driver = :selenium_chrome_headless
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
@@ -66,6 +69,22 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 end
 
+#Selenium::WebDriver.logger.level = :debug
+#Webdrivers::Chromedriver.required_version = `curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE`
+
+=begin
+Capybara.register_driver :headless_chrome do |app|
+  options = Selenium::WebDriver::Chrome::Options.new(
+    args: %w[headless no-sandbox disable-gpu disable-dev-shm-usage],
+  )
+
+  Capybara::Selenium::Driver.new(
+    app,
+    browser: :chrome,
+    options: options
+  )
+end
+=end
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
