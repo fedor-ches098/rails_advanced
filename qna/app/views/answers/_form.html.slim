@@ -1,5 +1,6 @@
-= form_with model: [@question, @answer] do |f|
-  = render 'shared/errors', resource: @answer
-  = f.label :body
+= form_with model: [@question, @answer], html: { id: "create-answer" }, data: {turbo:false}, local: false do |f|
+  .answer-errors
+    = render 'shared/errors', resource: @answer
+  = f.label :body, 'Your answer'
   = f.text_area :body
-  = f.submit 'Reply' 
+  = f.submit 'Create'
