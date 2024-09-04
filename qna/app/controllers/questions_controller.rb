@@ -14,9 +14,6 @@ class QuestionsController < ApplicationController
     @question = Question.new
   end
 
-  def edit
-  end
-
   def create
     @question = current_user.questions.new(question_params)
 
@@ -28,10 +25,10 @@ class QuestionsController < ApplicationController
   end
   
   def update
-    if @question.update(question_params)
-      redirect_to @question
+    if current_user.author?(@question)
+      @question.update(question_params)
     else
-      render :edit
+      render :show
     end
   end
 
@@ -47,10 +44,10 @@ class QuestionsController < ApplicationController
   private
 
   def load_question
-    @question = Question.find(params[:id])
+    @question = Question.with_attached_files.find(params[:id])
   end
 
   def question_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, files: [])
   end
 end
