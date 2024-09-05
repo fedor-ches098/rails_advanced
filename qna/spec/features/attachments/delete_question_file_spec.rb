@@ -13,7 +13,7 @@ feature 'User can remove his question attachments', %q{
   describe 'Authenticated user', js: true do
     before {sign_in(author)}
     before do
-      add_file_to(question)
+      attach_file_to(question)
       visit question_path(question)
     end
 

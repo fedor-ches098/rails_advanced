@@ -14,7 +14,7 @@ feature 'User can remove his answer attachments', %q{
   describe 'Authenticated user', js: true do
     before {sign_in(author)}
     before do
-      add_file_to(answer)
+      attach_file_to(answer)
       visit question_path(question)
       fill_in 'Your answer', with: 'answer body'
 
