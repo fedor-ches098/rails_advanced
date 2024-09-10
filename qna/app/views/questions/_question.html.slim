@@ -1,22 +1,31 @@
 .title
-  p= question.title
-.body
-  p= question.body
+  h2= question.title
 
-- if question.files.attached?
-  - question.files.each do |file|
-    div class = "attachment-#{file.id}"
-      p
-        = link_to file.filename.to_s, url_for(file)
-        - if current_user&.author?(question)
-          = link_to 'remove', attachment_path(file),
-             class: 'delete-attachment-link',
-             remote: true,
-             method: :delete
+.body
+  h3= question.body
+
+- if question.badge.present?
+  .badge
+    p Badge:
+    = image_tag question.badge.image, title: question.badge.title, size: "50x50"
+    p = question.badge.title
+
+- if question.links.count != 0
+  .links
+    p Links:
+    ul
+      = render question.links, resource: question
+
+.files
+  p Files:
+  - if question.files.attached?
+    = render 'attachments/attachment', resource: question
 
 .errors
 
 - if current_user&.author?(question)
-  = link_to 'Edit question', '#', class: 'edit-question-link'
-  = link_to 'Remove question', question_path(question), method: :delete
-  = render 'form'
+  p
+    = link_to 'Edit question', '#', class: 'edit-question-link'
+  p
+    = link_to 'Remove question', question_path(question), method: :delete
+    = render 'form'
