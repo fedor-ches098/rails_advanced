@@ -1,5 +1,4 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!
   before_action :load_question, only: %i[create]
   before_action :load_answer, only: %i[update destroy best]
 
