@@ -4,6 +4,10 @@
 .body
   h3= question.body
 
+- unless current_user&.author?(question)
+  .vote
+    = render 'shared/vote', resource: question
+
 - if question.badge.present?
   .badge
     p Badge:
