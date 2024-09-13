@@ -1,4 +1,6 @@
 class AnswersController < ApplicationController
+  include Liked
+  
   before_action :load_question, only: %i[create]
   before_action :load_answer, only: %i[update destroy best]
 

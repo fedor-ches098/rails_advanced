@@ -1,5 +1,9 @@
 div[class = "answer-#{answer.id}"]
 
+  - unless current_user&.author?(answer)
+    .vote
+      = render 'shared/vote', resource: answer
+
   - if answer.best?
     .best_answer
       h3= "best answer: #{answer.body}"
