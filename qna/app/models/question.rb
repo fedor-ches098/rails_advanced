@@ -1,4 +1,5 @@
 class Question < ApplicationRecord
+  include Commentable
   include Likable
   
   belongs_to :user

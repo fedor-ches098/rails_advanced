@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_09_10_185903) do
+ActiveRecord::Schema.define(version: 2024_09_15_072136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,17 @@ ActiveRecord::Schema.define(version: 2024_09_10_185903) do
     t.index ["user_id"], name: "index_badges_on_user_id"
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.text "body"
+    t.string "commentable_type"
+    t.bigint "commentable_id"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
   create_table "likes", force: :cascade do |t|
     t.integer "rating", default: 0, null: false
     t.string "likable_type"
@@ -112,5 +123,6 @@ ActiveRecord::Schema.define(version: 2024_09_10_185903) do
   add_foreign_key "answers", "users"
   add_foreign_key "badges", "questions"
   add_foreign_key "badges", "users"
+  add_foreign_key "comments", "users"
   add_foreign_key "questions", "users"
 end
