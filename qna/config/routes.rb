@@ -3,11 +3,8 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks' }
   root to: 'questions#index'
 
-  resources :users do
-    member do
-      get :set_email
-      patch :confirm_email
-    end
+  devise_scope :user do
+    post '/send_email' => 'oauth_callbacks#send_email'
   end
 
   concern :likable do

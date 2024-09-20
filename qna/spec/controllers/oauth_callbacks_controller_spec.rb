@@ -1,25 +1,34 @@
 require 'rails_helper'
 
 RSpec.describe OauthCallbacksController, type: :controller do
-  before do
-    @request.env['devise.mapping'] = Devise.mappings[:user]
-  end
+  let!(:user) { create(:user) }
 
-  describe 'Github' do
-    let(:oauth_data) { { 'provider' => 'github', 'uid' => 123 } }
+  describe 'github' do
+    before do
+      @request.env['devise.mapping'] = Devise.mappings[:user]
+      @request.env['omniauth.auth'] = mock_auth :github, email: user.email
+    end
+    let!(:oauth_data) do
+      OmniAuth::AuthHash.new(
+        provider: 'github',
+        uid: '123456',
+        info: {
+          name: 'MyUserName',
+          email: user.email
+        }
+      )
+    end
 
     it 'finds user from oauth data' do
       allow(request.env).to receive(:[]).and_call_original
       allow(request.env).to receive(:[]).with('omniauth.auth').and_return(oauth_data)
-      expect(User).to receive(:find_for_oauth).with(oauth_data)
+      expect(User).to receive(:find_for_oauth).with(oauth_data, user.email)
       get :github
     end
 
     context 'user exists' do
-      let!(:user) { create(:user) }
-
       before do
-        mock_oauth(:github, user.email)
+        allow(User).to receive(:find_for_oauth).and_return(user)
         get :github
       end
 
@@ -44,113 +53,98 @@ RSpec.describe OauthCallbacksController, type: :controller do
 
       it 'does not login user' do
         expect(subject.current_user).to_not be
-      end
-    end
-
-    context 'user with temp email' do
-      before do
-        mock_oauth(:github)
-        get :github
-      end
-
-      it 'login user' do
-        expect(subject.current_user).to eq User.last
-      end
-
-      it 'redirects to set email path' do
-        expect(response).to redirect_to set_email_user_path(User.last)
-      end
-    end
-
-    context 'user with realy email' do
-      let!(:user) { create(:user) }
-
-      before do
-        mock_oauth(:github, user.email)
-        get :github
-      end
-
-      it 'login user' do
-        expect(subject.current_user).to eq user
-      end
-
-      it 'redirects to root path' do
-        expect(response).to redirect_to root_path
       end
     end
   end
 
   describe 'vkontakte' do
-    let(:oauth_data) { { 'provider' => 'vkontakte', 'uid' => 123 } }
-
-    it 'finds user from oauth data' do
-      allow(request.env).to receive(:[]).and_call_original
-      allow(request.env).to receive(:[]).with('omniauth.auth').and_return(oauth_data)
-      expect(User).to receive(:find_for_oauth).with(oauth_data)
-      get :vkontakte
+    before do
+      @request.env['devise.mapping'] = Devise.mappings[:user]
+      @request.env['omniauth.auth'] = mock_auth :vkontakte
     end
 
     context 'user exists' do
-      let!(:user) { create(:user) }
-
       before do
-        mock_oauth(:github, user.email)
         get :vkontakte
       end
 
-      it 'login user' do
-        expect(subject.current_user).to eq user
+      it 'redirects to enter email page' do
+        expect(response).to render_template 'shared/email'
       end
 
-      it 'redirects to root path' do
-        expect(response).to redirect_to root_path
+      context 'logins user' do
+        before do
+          post :send_email, params: {
+            email: user.email
+          }
+        end
+
+        it 'sets user email in session' do
+          expect(session[:email]).to eq user.email
+        end
+
+        it 'login user' do
+          get :vkontakte
+          expect(subject.current_user).to eq user
+        end
+
+        it 'redirects to root path' do
+          get :vkontakte
+          expect(response).to redirect_to root_path
+        end
       end
     end
 
     context 'user does not exist' do
       before do
-        allow(User).to receive(:find_for_oauth)
         get :vkontakte
       end
 
-      it 'redirects to root path' do
-        expect(response).to redirect_to root_path
+      it 'redirects to email' do
+        expect(response).to render_template 'shared/email'
       end
 
       it 'does not login user' do
         expect(subject.current_user).to_not be
       end
     end
+  end
 
-    context 'user with temp email' do
+  describe 'send_email' do
+    before { @request.env['devise.mapping'] = Devise.mappings[:user] }
+    describe 'user exist' do
       before do
-        mock_oauth(:vkontakte)
-        get :vkontakte
+        post :send_email, params: {
+          email: user.email
+        }
       end
 
-      it 'login user' do
-        expect(subject.current_user).to eq User.last
+      it 'sets user email in session' do
+        expect(session[:email]).to eq user.email
       end
 
-      it 'redirects to set email path' do
-        expect(response).to redirect_to set_email_user_path(User.last)
+      it 'redirects to questions_path' do
+        expect(response).to redirect_to questions_path
+      end
+
+      it 'show flash message' do
+        expect(flash[:notice]).to eq 'You can sign in by provider'
       end
     end
 
-    context 'user with realy email' do
-      let!(:user) { create(:user) }
-
+    describe 'user does not exist' do
       before do
-        mock_oauth(:vkontakte, user.email)
-        get :vkontakte
+        post :send_email, params: {
+          email: 'new@gmail.com'
+        }
       end
 
-      it 'login user' do
-        expect(subject.current_user).to eq user
+      it 'sets user email in session' do
+        expect(session[:email]).to eq 'new@gmail.com'
       end
 
-      it 'redirects to root path' do
-        expect(response).to redirect_to root_path
+      it 'redirects to user_session_path' do
+        expect(response).to redirect_to user_session_path
       end
     end
   end

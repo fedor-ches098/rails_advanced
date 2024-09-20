@@ -21,12 +21,4 @@ module FeatureHelpers
       filename: 'default.rb'
     )
   end
-
-  def mock_auth_hash(provider, email = nil)
-    OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new(
-      provider: provider.to_s,
-      uid: '111111',
-      info: { email: email }
-    )
-  end
 end
