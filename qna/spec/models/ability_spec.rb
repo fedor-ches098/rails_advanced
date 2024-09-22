@@ -27,6 +27,10 @@ RSpec.describe Ability do
     let(:other_question) { create(:question, user: other) }
     let(:answer) { create(:answer, question: question, user: user) }
     let(:other_answer) { create(:answer, question: other_question, user: other) }
+    let(:comment) { create(:comment, commentable: question, user: user) }
+    let(:comment_other) { create(:comment, commentable: question, user: other) }
+    let(:link) { create(:link, linkable: question) }
+    let(:other_link) { create(:link, linkable: other_question) }
 
     before do
       attach_file_to(question)
@@ -46,14 +50,17 @@ RSpec.describe Ability do
     it { should be_able_to :update, answer }
     it { should_not be_able_to :update, other_answer }
 
+    it { should be_able_to :update, comment }
+    it { should_not be_able_to :update, comment_other }
+
     it { should be_able_to :destroy, question }
     it { should_not be_able_to :destroy, other_question }
 
     it { should be_able_to :destroy, answer }
     it { should_not be_able_to :destroy, other_answer }
 
-    it { should be_able_to :destroy, create(:link, linkable: question) }
-    it { should_not be_able_to :destroy, create(:link, linkable: other_question) }
+    it { should be_able_to :destroy, link }
+    it { should_not be_able_to :destroy, other_link }
 
     it { should be_able_to :destroy, create(:badge, question: question) }
     it { should_not be_able_to :destroy, create(:badge, question: other_question) }
