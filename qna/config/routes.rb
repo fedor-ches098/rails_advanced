@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
 
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks' }
   root to: 'questions#index'
+
+  devise_scope :user do
+    post '/send_email' => 'oauth_callbacks#send_email'
+  end
 
   concern :likable do
     member do

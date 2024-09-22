@@ -9,6 +9,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.cache_classes = false
+
   config.action_view.cache_template_loading = true
 
   # Do not eager load code on boot. This avoids loading your whole application
@@ -52,9 +53,12 @@ Rails.application.configure do
   # Tell Active Support which deprecation messages to disallow.
   config.active_support.disallowed_deprecation_warnings = []
 
+  config.action_cable.disable_request_forgery_protection = true
+
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 end
