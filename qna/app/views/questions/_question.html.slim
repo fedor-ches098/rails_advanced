@@ -4,7 +4,6 @@
 .body
   h3= question.body
 
-- unless current_user&.author?(question)
   .vote
     = render 'shared/vote', resource: question
 
@@ -27,14 +26,15 @@
 
 .errors
 
-- if current_user&.author?(question)
+- if can?(:update, question)
   p
     = link_to 'Edit question', '#', class: 'edit-question-link'
+- if can?(:destroy, question)
   p
     = link_to 'Remove question', question_path(question), method: :delete
     = render 'form'
   
-- if current_user
+- if can?(:create, Comment)
   = link_to 'New comment', '#', class: 'new-comment-link', data: { klass: question.class.to_s.downcase, id: question.id }
   = render 'comments/form', resource: question
 

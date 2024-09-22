@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'pp'
 
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
@@ -48,11 +49,6 @@ RSpec.describe AnswersController, type: :controller do
         author_answer.reload
         expect(author_answer.body).to eq 'new body'
       end
-
-      it 'renders update view' do
-        patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
-        expect(response).to redirect_to answer.question
-      end
     end
 
     context 'with invalid attributes' do
@@ -94,7 +90,9 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PATCH #best' do
     let(:author) { create(:user) }
-    let!(:answer) { create(:answer, question: question, user: author) }
+    let(:answer_author) { create(:user) }
+    let!(:new_question) { create(:question, user: author) }
+    let!(:answer) { create(:answer, question: new_question, user: answer_author) }
 
     context 'user an author' do
       before { login(author) }

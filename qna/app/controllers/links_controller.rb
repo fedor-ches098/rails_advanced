@@ -1,12 +1,10 @@
 class LinksController < ApplicationController
   before_action :find_link
 
+  authorize_resource
+
   def destroy
-    if current_user.author?(@link.linkable)
-      @link.destroy
-    else
-      redirect_to @link.linkable
-    end
+    @link.destroy
   end
 
   private
