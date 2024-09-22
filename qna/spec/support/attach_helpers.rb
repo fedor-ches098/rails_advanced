@@ -5,7 +5,7 @@ module AttachHelpers
 end
 
 RSpec.configure do |config|
-  [:controller, :feature].each do |type|
+  [:controller, :feature, :model].each do |type|
     config.include AttachHelpers, type: type
   end
 end

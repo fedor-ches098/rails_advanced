@@ -17,7 +17,8 @@ RSpec.describe AttachmentsController, type: :controller do
 
       it 'delete question attachment' do
         expect do
-          delete :destroy, params: { id: question.files.first }, format: :js
+          delete :destroy, 
+                 params: { id: question.files.first }, format: :js
         end.to change(ActiveStorage::Attachment, :count).by(-1)
       end
 
