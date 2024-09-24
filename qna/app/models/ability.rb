@@ -44,5 +44,7 @@ class Ability
     can :destroy, Link do |resource|
       user.author?(resource.linkable)
     end
+
+    can :me, User
   end
 end

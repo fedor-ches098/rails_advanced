@@ -8,6 +8,14 @@ Rails.application.routes.draw do
     post '/send_email' => 'oauth_callbacks#send_email'
   end
 
+  namespace :api do
+    namespace :v1 do
+      resources :profiles, only: [] do
+        get :me, on: :collection
+      end
+    end
+  end
+
   concern :likable do
     member do
       post :vote_up, :vote_down
