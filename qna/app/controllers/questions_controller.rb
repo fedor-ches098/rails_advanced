@@ -3,7 +3,6 @@ class QuestionsController < ApplicationController
   include PublicAuth
   
   before_action :load_question, only: [:show, :edit, :update, :destroy]
-  before_action :current_user_to_gon, only: %i[index show]
   before_action :init_comment, only: %i[show update]
   
   after_action :publish_question, only: :create
@@ -48,11 +47,6 @@ class QuestionsController < ApplicationController
 
   def load_question
     @question = Question.with_attached_files.find(params[:id])
-  end
-
-  def current_user_to_gon
-    gon.current_user = current_user
-    #gon.push({current_user: current_user})
   end
 
   def publish_question
