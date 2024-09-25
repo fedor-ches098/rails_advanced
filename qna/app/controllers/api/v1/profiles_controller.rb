@@ -7,6 +7,6 @@ class Api::V1::ProfilesController < Api::V1::BaseController
 
   def index
     @profiles = User.where.not(id: current_resource_owner.id)
-    render json: @profiles
+    render json: @profiles, each_serializer: ProfileSerializer
   end
 end

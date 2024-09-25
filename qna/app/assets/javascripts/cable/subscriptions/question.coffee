@@ -6,7 +6,7 @@ App.cable.subscriptions.create('QuestionsChannel', {
     @perform 'follow'
   
   received: (data) ->
-    @appendLine(data)
+      @appendLine(data)
 
   appendLine: (data) ->
     html = @createLine(data)

@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+require 'pp'
 RSpec.describe BadgesController, type: :controller do
   let(:user) { create(:user) }
   let(:question) { create(:question, user: user) }
@@ -13,6 +13,7 @@ RSpec.describe BadgesController, type: :controller do
     end
 
     it 'populates an array of all badges' do
+      pp badges
       expect(assigns(:badges)).to match_array(badges)
     end
 

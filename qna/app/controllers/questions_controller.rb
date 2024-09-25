@@ -52,6 +52,7 @@ class QuestionsController < ApplicationController
 
   def current_user_to_gon
     gon.current_user = current_user
+    #gon.push({current_user: current_user})
   end
 
   def publish_question

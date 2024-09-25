@@ -39,6 +39,11 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    active_model_serializers (0.10.14)
+      actionpack (>= 4.1)
+      activemodel (>= 4.1)
+      case_transform (>= 0.2)
+      jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
     activejob (6.1.7.8)
       activesupport (= 6.1.7.8)
       globalid (>= 0.3.6)
@@ -1617,6 +1622,7 @@ GEM
       aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.2.0)
     bcrypt (3.1.20)
+    bigdecimal (3.1.8)
     bindex (0.8.1)
     bootsnap (1.18.3)
       msgpack (~> 1.2)
@@ -1635,6 +1641,8 @@ GEM
     capybara-email (3.0.2)
       capybara (>= 2.4, < 4.0)
       mail
+    case_transform (0.2)
+      activesupport
     childprocess (5.0.0)
     cocoon (1.2.15)
     coffee-rails (4.2.2)
@@ -1687,6 +1695,7 @@ GEM
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
+    jsonapi-renderer (0.2.2)
     jwt (2.9.0)
       base64
     launchy (3.0.1)
@@ -1738,6 +1747,9 @@ GEM
     octokit (4.25.1)
       faraday (>= 1, < 3)
       sawyer (~> 0.9)
+    oj (3.16.6)
+      bigdecimal (>= 3.0)
+      ostruct (>= 0.2)
     omniauth (2.1.2)
       hashie (>= 3.4.6)
       rack (>= 2.2.3)
@@ -1754,6 +1766,7 @@ GEM
     omniauth-vkontakte (1.8.1)
       omniauth-oauth2 (>= 1.5, <= 1.8.0)
     orm_adapter (0.5.0)
+    ostruct (0.6.0)
     pg (1.5.6)
     public_suffix (6.0.0)
     puma (5.6.8)
@@ -1906,6 +1919,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  active_model_serializers (~> 0.10)
   aws-sdk
   bootsnap (>= 1.4.4)
   byebug
@@ -1924,6 +1938,7 @@ DEPENDENCIES
   letter_opener
   listen (~> 3.3)
   octokit (~> 4.0)
+  oj
   omniauth
   omniauth-github
   omniauth-rails_csrf_protection

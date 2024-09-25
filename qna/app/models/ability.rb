@@ -16,7 +16,8 @@ class Ability
   end
 
   def guest_abilities
-    can :read, :all
+    can :read, [Question, Answer]
+    can :answers, Question
   end
 
   def admin_abilities
@@ -46,5 +47,9 @@ class Ability
     end
 
     can :me, User
+
+    can :answers, Question
+
+    can :index, User
   end
 end
