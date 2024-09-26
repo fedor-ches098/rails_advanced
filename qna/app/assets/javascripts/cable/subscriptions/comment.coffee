@@ -13,7 +13,8 @@ $ ->
 
       comment = dataParse.comment
       container = '.' + comment.commentable_type.toLowerCase() + '-' + comment.commentable_id
-      console.log container
+      console.log gon
+  
 
       if gon.current_user && (gon.current_user.id != comment.user_id)
         $(container + ' .comments').append(JST['templates/comment']({

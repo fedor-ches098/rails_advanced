@@ -16,7 +16,8 @@ class Ability
   end
 
   def guest_abilities
-    can :read, :all
+    can :read, [Question, Answer]
+    can :answers, Question
   end
 
   def admin_abilities
@@ -26,6 +27,7 @@ class Ability
   def user_abilities
     guest_abilities
     can :create, [Question, Answer, Comment]
+    can :read, [Question, Badge, Answer]
     can :update, [Question, Answer, Comment],  user_id: user.id
     can :destroy, [Question, Answer], user_id: user.id
     can :destroy, Badge, question: { user_id: user.id }
@@ -44,5 +46,11 @@ class Ability
     can :destroy, Link do |resource|
       user.author?(resource.linkable)
     end
+
+    can :me, User
+
+    can :answers, Question
+
+    can :index, User
   end
 end

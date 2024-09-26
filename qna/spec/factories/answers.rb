@@ -6,6 +6,7 @@ FactoryBot.define do
   factory :answer do
     body
     question
+    user
   end
 
   trait :invalid_answer do

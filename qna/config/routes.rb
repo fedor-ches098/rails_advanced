@@ -1,10 +1,24 @@
 Rails.application.routes.draw do
 
+  use_doorkeeper
   devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks' }
   root to: 'questions#index'
 
   devise_scope :user do
     post '/send_email' => 'oauth_callbacks#send_email'
+  end
+
+  namespace :api do
+    namespace :v1 do
+      resources :profiles, only: [:index] do
+        get :me, on: :collection
+      end
+
+      resources :questions, except: %i[new edit] do 
+        get :answers, on: :member
+        resources :answers, shallow: true, except: %i[new edit index]
+      end
+    end
   end
 
   concern :likable do

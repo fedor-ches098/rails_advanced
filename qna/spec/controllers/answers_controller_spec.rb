@@ -2,6 +2,13 @@ require 'rails_helper'
 require 'pp'
 
 RSpec.describe AnswersController, type: :controller do
+  
+  it_behaves_like 'Liked' do
+    let(:second_user) { create(:user) }
+    let(:question) { create(:question, user: user) }
+    let(:likable) { create(:answer, question: question, user: user) }
+  end
+
   let(:user) { create(:user) }
   let(:question) { create(:question, user: user) }
   let(:answer) { create(:answer, question: question, user: user) }
@@ -107,5 +114,4 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
-  it_behaves_like 'liked'
 end
