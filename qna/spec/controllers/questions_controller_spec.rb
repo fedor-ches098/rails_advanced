@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
+
+  it_behaves_like 'Liked' do
+    let(:second_user) { create(:user) }
+    let(:likable) { create(:question) }
+  end
+
   let(:question) { create(:question, user: user) }
   let(:user) { create(:user) }
 
@@ -132,5 +138,4 @@ RSpec.describe QuestionsController, type: :controller do
       expect(response).to redirect_to questions_path
     end
   end
-  it_behaves_like 'liked'
 end

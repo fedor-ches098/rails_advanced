@@ -12,7 +12,11 @@ RSpec.describe Question, type: :model do
   it { should accept_nested_attributes_for :links }
   it { should accept_nested_attributes_for :badge }
 
-  it_behaves_like 'likable'
+  it_behaves_like 'Likable' do 
+    let(:other_users) { create_list(:user, 5) }
+    let(:user) { create(:user) }
+    let(:likable) { create(:question) }
+  end
 
   it { should have_many_attached(:files) }
 end

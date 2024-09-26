@@ -14,7 +14,10 @@ Rails.application.routes.draw do
         get :me, on: :collection
       end
 
-      resources :questions, only: %i[index]
+      resources :questions, except: %i[new edit] do 
+        get :answers, on: :member
+        resources :answers, shallow: true, except: %i[new edit index]
+      end
     end
   end
 

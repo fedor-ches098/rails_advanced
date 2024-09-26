@@ -1919,7 +1919,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  active_model_serializers (~> 0.10)
+  active_model_serializers (~> 0.10.0)
   aws-sdk
   bootsnap (>= 1.4.4)
   byebug
