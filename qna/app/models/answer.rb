@@ -8,6 +8,8 @@ class Answer < ApplicationRecord
   has_many :links, dependent: :destroy, as: :linkable
 
   accepts_nested_attributes_for :links, reject_if: :all_blank
+
+  after_commit :notify, on: :create
   
   validates :body, presence: true
 
@@ -19,5 +21,9 @@ class Answer < ApplicationRecord
       question.answers.best.update_all(best: false)
       update(best: true)
     end
+  end
+
+  def notify
+    NewAnswerJob.perform_later(self)
   end
 end

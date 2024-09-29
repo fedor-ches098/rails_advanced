@@ -84,5 +84,8 @@ RSpec.describe Ability do
 
     it { should be_able_to :best, answer }
     it { should_not be_able_to :best, other_answer }
+
+    it { should be_able_to :create, Subscription }
+    it { should be_able_to :destroy, Subscription }
   end
 end

@@ -1,11 +1,17 @@
 .title
   h2= question.title
 
-.body
-  h3= question.body
-
   .vote
     = render 'shared/vote', resource: question
+
+  .subscribe
+    - if @question.subscribed?(current_user)
+      = link_to 'Unsubscribe', subscription_path(@subscription), method: :delete, class: 'unsubscribe-question-link'
+    - else
+      = link_to 'Subscribe', question_subscriptions_path(@question), method: :post, class: 'subscribe-question-link'
+
+.body
+  h3= question.body
 
 - if question.badge.present?
   .badge
