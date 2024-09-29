@@ -2,9 +2,11 @@ class QuestionsController < ApplicationController
   include Liked
   include PublicAuth
   
-  before_action :load_question, only: [:show, :edit, :update, :destroy]
+  before_action :load_question, only: [:show, :update, :destroy]
   before_action :init_comment, only: %i[show update]
   before_action :current_user_to_gon, only: %i[index show]
+  before_action :set_subscription, only: %i[show update]
+  
   after_action :publish_question, only: :create
   
   authorize_resource
@@ -19,7 +21,7 @@ class QuestionsController < ApplicationController
   end
   
   def new
-    @question = Question.new
+    @question = current_user.questions.new
     @question.links.new
     @question.badge ||= Badge.new
   end
@@ -72,5 +74,9 @@ class QuestionsController < ApplicationController
 
   def init_comment
     @comment = Comment.new
+  end
+
+  def set_subscription
+    @subscription ||= current_user&.subscriptions&.find_by(question: @question)
   end
 end
