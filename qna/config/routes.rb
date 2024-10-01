@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks' }
   root to: 'questions#index'
 
+  get '/search', to: 'search#search'
+
   devise_scope :user do
     post '/send_email' => 'oauth_callbacks#send_email'
   end
