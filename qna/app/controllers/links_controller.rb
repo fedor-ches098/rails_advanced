@@ -1,4 +1,5 @@
 class LinksController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_link
 
   authorize_resource

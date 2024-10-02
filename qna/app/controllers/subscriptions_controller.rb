@@ -1,5 +1,5 @@
 class SubscriptionsController < ApplicationController
-
+  before_action :authenticate_user!
   authorize_resource
 
   def create

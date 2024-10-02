@@ -1,6 +1,7 @@
 class AnswersController < ApplicationController
   include Liked
   
+  before_action :authenticate_user!
   before_action :load_question, only: %i[create]
   before_action :load_answer, only: %i[update destroy best]
   before_action :init_comment, only: %i[create update best]

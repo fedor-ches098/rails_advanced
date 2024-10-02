@@ -1,6 +1,6 @@
 class AttachmentsController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_attachment
-
   authorize_resource
 
   def destroy
