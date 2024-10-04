@@ -1806,7 +1806,6 @@ GEM
       omniauth (~> 2.0)
     omniauth-vkontakte (1.8.1)
       omniauth-oauth2 (>= 1.5, <= 1.8.0)
-    openssl (2.2.0)
     orm_adapter (0.5.0)
     ostruct (0.6.0)
     pg (1.5.6)
@@ -2026,7 +2025,6 @@ DEPENDENCIES
   omniauth-github
   omniauth-rails_csrf_protection
   omniauth-vkontakte
-  openssl
   pg (~> 1.1)
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)

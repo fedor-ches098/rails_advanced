@@ -9,7 +9,6 @@ set :branch, "main"
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/qna/qna"
 set :deploy_user, 'qna'
-set :bundle_gemfile,  "qna/Gemfile"
 
 # Default value for :pty is false
 set :pty, false
