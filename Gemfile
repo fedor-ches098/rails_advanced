@@ -27,7 +27,7 @@ gem 'omniauth-rails_csrf_protection'
 gem 'cancancan'
 gem 'doorkeeper'
 gem 'active_model_serializers', '~> 0.10.0'
-gem 'oj'
+#gem 'oj'
 gem 'sidekiq', '6.5.5'
 gem 'sinatra', require: false
 gem 'whenever', require: false

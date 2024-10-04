@@ -52,7 +52,7 @@ class QuestionsController < ApplicationController
   end
 
   def current_user_to_gon
-    gon.current_user = current_user
+    #gon.current_user = current_user
   end
 
   def publish_question
