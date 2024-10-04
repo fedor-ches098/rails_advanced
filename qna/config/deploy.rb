@@ -4,15 +4,15 @@ lock "~> 3.19.1"
 set :application, "qna"
 set :repo_url, "git@github.com:fedor-ches098/rails_advanced.git"
 
-# Default branch is :master
-ask :main, `git rev-parse --abbrev-ref HEAD`.chomp
+set :branch, "main"
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/qna/qna"
 set :deploy_user, 'qna'
+set :bundle_gemfile,  "qna/Gemfile"
 
 # Default value for :pty is false
-set :pty, true
+set :pty, false
 
 # Default value for :linked_files is []
 append :linked_files, "config/database.yml", 'config/master.key'
