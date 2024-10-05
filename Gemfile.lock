@@ -172,7 +172,7 @@ GEM
       logger
     faraday-net_http (3.3.0)
       net-http
-    ffi (1.17.0)
+    ffi (1.17.0-x86_64-linux-gnu)
     globalid (1.2.1)
       activesupport (>= 6.1)
     gon (6.4.0)
@@ -515,7 +515,7 @@ DEPENDENCIES
   whenever
 
 RUBY VERSION
-   ruby 3.0.0p0
+   ruby 3.3.3p89
 
 BUNDLED WITH
    2.2.3
