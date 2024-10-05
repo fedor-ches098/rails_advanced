@@ -7,12 +7,12 @@ require "capistrano/rvm"
 require "capistrano/bundler"
 require "capistrano/rails"
 require "capistrano/passenger"
-require "capistrano/sidekiq"
-require "capistrano/sidekiq"
-require "thinking_sphinx/capistrano"
-require "whenever/capistrano"
-install_plugin Capistrano::Sidekiq
-install_plugin Capistrano::Sidekiq::Systemd
+#require "capistrano/sidekiq"
+#require "capistrano/sidekiq"
+#require "thinking_sphinx/capistrano"
+#require "whenever/capistrano"
+#install_plugin Capistrano::Sidekiq
+#install_plugin Capistrano::Sidekiq::Systemd
 
 # Load the SCM plugin appropriate to your project:
 #
