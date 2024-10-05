@@ -58,7 +58,7 @@ class QuestionsController < ApplicationController
   def publish_question
     return if @question.errors.any?
 
-    ActionCable.server.br oadcast(
+    ActionCable.server.broadcast(
       'questions', {id: @question.id, title: @question.title}
     )
   end

@@ -27,7 +27,7 @@ gem 'omniauth-rails_csrf_protection'
 gem 'cancancan'
 gem 'doorkeeper'
 gem 'active_model_serializers', '~> 0.10.0'
-#gem 'oj'
+gem 'oj'
 gem 'sidekiq', '6.5.5'
 gem 'sinatra', require: false
 gem 'whenever', require: false
@@ -40,7 +40,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~> 4.1.0'
   gem 'factory_bot_rails'
-  gem 'aws-sdk'
+  gem "aws-sdk-s3", require: false
   gem 'capybara-email'
   gem 'letter_opener'
   gem 'capistrano', require: false
