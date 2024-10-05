@@ -52,13 +52,13 @@ class QuestionsController < ApplicationController
   end
 
   def current_user_to_gon
-    #gon.current_user = current_user
+    gon.current_user = current_user
   end
 
   def publish_question
     return if @question.errors.any?
 
-    ActionCable.server.broadcast(
+    ActionCable.server.br oadcast(
       'questions', {id: @question.id, title: @question.title}
     )
   end
