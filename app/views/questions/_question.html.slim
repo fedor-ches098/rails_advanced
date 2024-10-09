@@ -1,49 +1,51 @@
-.title
-  h2= question.title
+- cache question do
+  .title
+    h2= question.title
 
-  .vote
-    = render 'shared/vote', resource: question
+    .vote
+      = render 'shared/vote', resource: question
 
-  .subscribe
-    - if @question.subscribed?(current_user)
-      = link_to 'Unsubscribe', subscription_path(@subscription), method: :delete, class: 'unsubscribe-question-link'
-    - else
-      = link_to 'Subscribe', question_subscriptions_path(@question), method: :post, class: 'subscribe-question-link'
+    .subscribe
+      - if @question.subscribed?(current_user)
+        = link_to 'Unsubscribe', subscription_path(@subscription), method: :delete, class: 'unsubscribe-question-link'
+      - else
+        = link_to 'Subscribe', question_subscriptions_path(@question), method: :post, class: 'subscribe-question-link'
 
-.body
-  h3= question.body
+  .body
+    h3= question.body
 
-- if question.badge.present?
-  .badge
-    p Badge:
-    = image_tag question.badge.image, title: question.badge.title, size: "50x50"
-    p = question.badge.title
+  - if question.badge.present?
+    - cache question.badge do
+      .badge
+        p Badge:
+        = image_tag question.badge.image, title: question.badge.title, size: "50x50"
+        p = question.badge.title
 
-- if question.links.count != 0
-  .links
-    p Links:
-    ul
-      = render question.links, resource: question
+  - if question.links.count != 0
+    .links
+      p Links:
+      ul
+        = render question.links, resource: question
 
-.files
-  p Files:
-  - if question.files.attached?
-    = render 'attachments/attachment', resource: question
+  .files
+    p Files:
+    - if question.files.attached?
+      = render 'attachments/attachment', resource: question
 
-.errors
+  .errors
 
-- if can?(:update, question)
-  p
-    = link_to 'Edit question', '#', class: 'edit-question-link'
-    = render 'form'
-- if can?(:destroy, question)
-  p
-    = link_to 'Remove question', question_path(question), method: :delete
-  
-- if can?(:create, Comment)
-  = link_to 'New comment', '#', class: 'new-comment-link', data: { klass: question.class.to_s.downcase, id: question.id }
-  = render 'comments/form', resource: question
+  - if can?(:update, question)
+    p
+      = link_to 'Edit question', '#', class: 'edit-question-link'
+      = render 'form'
+  - if can?(:destroy, question)
+    p
+      = link_to 'Remove question', question_path(question), method: :delete
+    
+  - if can?(:create, Comment)
+    = link_to 'New comment', '#', class: 'new-comment-link', data: { klass: question.class.to_s.downcase, id: question.id }
+    = render 'comments/form', resource: question
 
-.comments
-  p Comments:
-  = render question.comments
+  .comments
+    p Comments:
+    = render question.comments
