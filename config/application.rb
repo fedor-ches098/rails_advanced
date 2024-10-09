@@ -23,6 +23,8 @@ module Qna
     
     config.eager_load_paths << Rails.root.join('app/services')
 
+    config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 60.minutes }
+
     
     #config.autoload_paths << Rails.root.join('app/services')
 
